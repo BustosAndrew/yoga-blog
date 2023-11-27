@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.dark {
+  background-color: #424549;
+  color: #fff;
+}
+
+.dark .nav-links a {
+  color: #fff;
+}
+
+.dark .yoga-link {
+  @apply text-slate-300;
+}
+
+.dark .lightwave-link {
+  @apply text-slate-100;
+}
+
+.lightwave-link {
+  @apply text-slate-400;
+}
+
+.yoga-link {
+  @apply text-slate-800;
+}
+
+.dark
+  .prose
+  :where(h2, h3, h1, h4, h5, h6):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  @apply text-gray-300;
+}
+
+.dark
+  .prose
+  :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  @apply text-gray-200;
+}
+
+.dark
+  .prose
+  :where(thead th, a):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  @apply text-white;
+}

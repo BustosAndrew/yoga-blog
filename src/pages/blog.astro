@@ -30,7 +30,7 @@ publishedBlogEntries.sort(function (a, b) {
           publishedBlogEntries.map((blogPostEntry, index) => (
             <li>
               <a href={`/blog/${blogPostEntry.slug}`}>
-                <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center hover:bg-stone-100 p-4 rounded">
+                <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center hover:bg-stone-500/20 transition p-4 rounded">
                   <Picture
                     src={blogPostEntry.data.image.src}
                     alt={blogPostEntry.data.image.alt}
@@ -54,12 +54,12 @@ publishedBlogEntries.sort(function (a, b) {
                     </h2>
 
                     <div class="flex gap-2 mt-3">
-                      <span class="text-gray-400">
+                      <span class="text-slate-400">
                         {blogPostEntry.data.author}
                       </span>
-                      <span class="text-gray-400">• </span>
+                      <span class="text-slate-400">• </span>
                       <time
-                        class="text-gray-400"
+                        class="text-slate-400"
                         datetime={blogPostEntry.data.publishDate.toISOString()}>
                         {blogPostEntry.data.publishDate.toDateString()}
                       </time>
