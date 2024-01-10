@@ -8,7 +8,7 @@ import About from "@components/about.astro";
 import Cta from "@components/cta.astro";
 
 // Filter blog entries with 'draft: false' & date before current date
-const publishedBlogEntries = await getCollection("blog", ({ data }) => {
+const publishedBlogEntries = await getCollection("projects", ({ data }) => {
   return !data.draft && data.publishDate < new Date();
 });
 
@@ -18,10 +18,10 @@ publishedBlogEntries.sort(function (a, b) {
 });
 ---
 
-<Layout title="Blog">
+<Layout title="Projects">
   <Container>
     <Sectionhead>
-      <Fragment slot="title">Our Blog</Fragment>
+      <Fragment slot="title">Projects</Fragment>
       <Fragment slot="desc">
         We write about building startups and thoughts going on our mind.
       </Fragment>
@@ -31,7 +31,7 @@ publishedBlogEntries.sort(function (a, b) {
         {
           publishedBlogEntries.map((blogPostEntry, index) => (
             <li>
-              <a href={`/blog/${blogPostEntry.slug}`}>
+              <a href={`/projects/${blogPostEntry.slug}`}>
                 <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center hover:bg-stone-500/20 transition p-4 rounded">
                   <Picture
                     src={blogPostEntry.data.image.src}
