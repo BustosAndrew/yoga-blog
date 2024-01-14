@@ -5,7 +5,7 @@ import Container from "@components/container.astro";
 
 // Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("projects");
+  const blogEntries = await getCollection("sessions");
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -54,9 +54,9 @@ const { Content } = await entry.render();
     </div>
     <div class="text-center mt-8">
       <a
-        href="/projects"
+        href="/sessions"
         class="bg-slate-300 text-black px-5 py-3 rounded-md hover:bg-gray-200 transition"
-        >← Back to Projects</a
+        >← Back to Sessions</a
       >
     </div>
   </Container>
