@@ -24,6 +24,7 @@ const { Content } = await entry.render();
         class="text-yellow-500 uppercase tracking-wider text-sm font-medium">
         {entry.data.category}
       </span>
+
       <h1
         class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-1 lg:leading-tight">
         {entry.data.title}
@@ -48,8 +49,17 @@ const { Content } = await entry.render();
         </div>
       </div>
     </div>
-
     <div class="mx-auto text-slate-400 prose prose-lg mt-6 max-w-3xl">
+      {
+        entry.data.video.src && (
+          <video
+            class="w-full rounded-md mt-4"
+            controls
+            src={entry.data.video.src}
+            preload="metadata"
+          />
+        )
+      }
       <Content />
     </div>
     <div class="text-center mt-8">

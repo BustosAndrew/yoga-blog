@@ -11,6 +11,10 @@ const blogCollection = defineCollection({
       src: z.string(),
       alt: z.string(),
     }),
+    video: z.object({
+      src: z.string(),
+      alt: z.string(),
+    }),
     publishDate: z.string().transform((str) => new Date(str)),
     author: z.string().default("Astroship"),
     category: z.string(),
