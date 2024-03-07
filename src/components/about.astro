@@ -1,20 +1,49 @@
-<div class="mt-16 text-center">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">About Us</h2>
-  <h2 class="text-2xl mt-4 font-bold lg:tracking-tight">
-    Everything you need to start a website
-  </h2>
-  <p class="text-lg mt-4 text-slate-400">
-    Astro comes batteries included. It takes the best parts of state-of-the-art
-    tools and adds its own innovations.
-  </p>
-</div>
-<div class="mt-16 text-center">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">Purpose</h2>
-  <h2 class="text-2xl mt-4 font-bold lg:tracking-tight">
-    Everything you need to start a website
-  </h2>
-  <p class="text-lg mt-4 text-slate-400">
-    Astro comes batteries included. It takes the best parts of state-of-the-art
-    tools and adds its own innovations.
-  </p>
+---
+import Link from "@components/ui/link.astro";
+---
+
+<div class="mt-16">
+  <div class="flex gap-10">
+    <div class="grid grid-rows-2 grid-cols-2 gap-4">
+      <img src="yoga1.png" class="rounded-lg shadow-[4px_4px_0_0] row-span-1" />
+      <img
+        src="yoga1.png"
+        class="object-cover w-fit rounded-lg shadow-[4px_4px_0_0] h-4/5 bg-black row-span-2"
+      />
+      <img src="yoga1.png" class="rounded-lg shadow-[4px_4px_0_0] row-span-1" />
+    </div>
+    <div>
+      <h2
+        class="text-4xl lg:text-5xl font-medium lg:tracking-tight text-yellow-400">
+        Our Work
+      </h2>
+      <p class="text-lg mt-4">
+        Civil those mrs enjoy shy jointure saw horrible. He private he on be
+        imagine suppose. Fertile beloved evident through no service elderly is.
+        Own neglected you preferred way sincerity delivered his attempted. To of
+        message cottage windows do besides against uncivil.
+      </p>
+      <div class="mt-4">
+        <Link
+          rel="noopener"
+          href="/contact"
+          style="bg-white"
+          class="flex gap-1 items-center justify-center font-medium w-fit">
+          Contact Us
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div class="mt-16 text-center">
+    <h2
+      class="text-4xl lg:text-5xl font-medium lg:tracking-tight text-yellow-400">
+      Our Purpose
+    </h2>
+    <p class="text-lg mt-4 px-36">
+      Civil those mrs enjoy shy jointure saw horrible. He private he on be
+      imagine suppose. Fertile beloved evident through no service elderly is.
+      Own neglected you preferred way sincerity delivered his attempted. To of
+      message cottage windows do besides against uncivil.
+    </p>
+  </div>
 </div>

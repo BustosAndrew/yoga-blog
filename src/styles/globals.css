@@ -11,16 +11,22 @@ html.dark {
   color: #fff;
 }
 
+.dark img {
+  box-shadow: 4px 4px 0 #000;
+}
+
 .dark .yoga-link {
-  @apply text-slate-300;
+  @apply text-white;
 }
 
 .dark .lightwave-link {
-  @apply text-slate-100;
+  @apply text-yellow-400;
+  @apply font-bold;
 }
 
 .lightwave-link {
-  @apply text-slate-400;
+  @apply text-yellow-400;
+  @apply font-bold;
 }
 
 .yoga-link {

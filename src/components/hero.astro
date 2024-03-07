@@ -12,34 +12,34 @@ import Link from "@components/ui/link.astro";
       alt="Astronaut in the air"
       widths={[200, 400, 600]}
       aspectRatio="1:1"
-      sizes="(max-width: 800px) 100vw, 420px"
+      sizes="(max-width: 800px) 100vw, 300px"
       loading="eager"
-      class="shadow-none"
+      class="rounded-lg border border-2 border-black"
+      style={{ boxShadow: "5px 5px 0 black" }}
     />
   </div>
   <div>
     <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
+      class="text-5xl lg:text-6xl xl:text-7xl font-medium lg:tracking-tight xl:tracking-tighter">
       Marketing website done right.
     </h1>
-    <p class="text-lg mt-4 text-slate-400 max-w-xl">
+    <p class="text-lg mt-4 max-w-xl">
       Built with Astro.build and TailwindCSS. You can quickly create any website
       with this.
     </p>
     <div class="mt-6 flex flex-col sm:flex-row gap-3">
       <Link
         href="#"
-        class="flex gap-1 items-center justify-center"
+        class="flex gap-1 items-center justify-center text-white font-bold border-yellow-600"
         rel="noopener">
         Get Started
       </Link>
       <Link
-        size="lg"
-        style="outline"
         rel="noopener"
         href="/contact"
-        class="flex gap-1 items-center justify-center">
-        Contact Me
+        style="bg-white"
+        class="flex gap-1 items-center justify-center font-medium">
+        View the Team
       </Link>
     </div>
   </div>
