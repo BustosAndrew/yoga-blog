@@ -29,6 +29,10 @@ const menuitems = [
     path: "/sessions",
   },
   {
+    title: "Virtual Studio",
+    path: "/studio",
+  },
+  {
     title: "Contact Us",
     path: "/contact",
   },
@@ -73,8 +77,8 @@ const menuitems = [
                     <a
                       href={item.path}
                       class={`flex lg:px-3 py-2 items-center text-gray-600 ${
-                        index === 2
-                          ? "bg-black rounded text-white hover:text-gray-300"
+                        index === 3
+                          ? "w-fit px-2 bg-black rounded text-white hover:text-gray-300"
                           : "hover:text-gray-900"
                       }`}>
                       <span>{item.title}</span>
