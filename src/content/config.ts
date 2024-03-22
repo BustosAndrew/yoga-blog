@@ -32,6 +32,7 @@ const teamCollection = defineCollection({
       alt: z.string(),
     }),
     publishDate: z.string().transform((str) => new Date(str)),
+    bio: z.string().transform((str) => str.trimStart()),
   }),
 });
 
