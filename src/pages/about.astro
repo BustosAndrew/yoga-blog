@@ -29,7 +29,7 @@ const publishedTeamMembers = await getCollection("team", ({ data }) => {
         the job. This is what makes our team so special.
       </p>
     </div>
-    <div class="grid grid-cols-3 mx-auto px-36 gap-10 mt-12">
+    <div class="grid grid-cols-1 sm:grid-cols-3 mx-auto gap-10 mt-12">
       {
         publishedTeamMembers.map((teamMemberEntry) => (
           <div class="group">
