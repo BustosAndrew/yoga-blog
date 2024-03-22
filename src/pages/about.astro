@@ -51,12 +51,14 @@ const publishedTeamMembers = await getCollection("team", ({ data }) => {
               <h2 class="text-lg text-black">{teamMemberEntry.data.name}</h2>
             </div>
             <div class="mt-6 text-center">
-              <h3 class="text-xl text-yellow-400">
-                {teamMemberEntry.data.title}
-              </h3>
-              <p class="text-sm whitespace-pre-wrap">
-                {teamMemberEntry.data.bio.trim()}
-              </p>
+              <>
+                <h3 class="text-xl text-yellow-400">
+                  {teamMemberEntry.data.title}
+                </h3>
+                <p class="text-sm whitespace-pre-line">
+                  {teamMemberEntry.data.bio.trim()}
+                </p>
+              </>
             </div>
           </div>
         ))
