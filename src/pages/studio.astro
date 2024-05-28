@@ -1,0 +1,22 @@
+---
+import Container from "@components/container.astro";
+import Sectionhead from "@components/sectionhead.astro";
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Virtual Studio">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">Virtual Studio</Fragment>
+      <Fragment slot="desc">We are a here to help.</Fragment>
+    </Sectionhead>
+  </Container>
+  <div class="flex justify-center w-full h-screen">
+    <iframe
+      class="w-full max-w-4xl h-full"
+      src="https://lightwaveyoga-web.pages.dev/"
+      allowfullscreen
+      allow="camera; microphone">
+    </iframe>
+  </div>
+</Layout>
