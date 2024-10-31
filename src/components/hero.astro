@@ -1,5 +1,5 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Image } from 'astro:assets';
 import heroImage from "assets/logo.jpg";
 import Link from "@components/ui/link.astro";
 ---
@@ -7,11 +7,10 @@ import Link from "@components/ui/link.astro";
 <main
   class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
   <div class="py-6 md:order-1 hidden md:block">
-    <Picture
+    <Image
       src={heroImage}
       alt="Astronaut in the air"
       widths={[200, 400, 600]}
-      aspectRatio="1:1"
       sizes="(max-width: 800px) 100vw, 300px"
       loading="eager"
       class="rounded-lg border border-2 border-black"

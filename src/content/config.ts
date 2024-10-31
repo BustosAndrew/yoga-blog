@@ -3,37 +3,41 @@ import { z, defineCollection } from "astro:content";
 
 // 2. Define your collection(s)
 const blogCollection = defineCollection({
-  schema: z.object({
-    draft: z.boolean(),
-    title: z.string(),
-    snippet: z.string(),
-    image: z.object({
-      src: z.string(),
-      alt: z.string(),
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      draft: z.boolean(),
+      title: z.string(),
+      snippet: z.string(),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
+      video: z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
+      publishDate: z.string().transform((str) => new Date(str)),
+      author: z.string().default("Astroship"),
+      category: z.string(),
+      tags: z.array(z.string()),
     }),
-    video: z.object({
-      src: z.string(),
-      alt: z.string(),
-    }),
-    publishDate: z.string().transform((str) => new Date(str)),
-    author: z.string().default("Astroship"),
-    category: z.string(),
-    tags: z.array(z.string()),
-  }),
 });
 
 const teamCollection = defineCollection({
-  schema: z.object({
-    draft: z.boolean(),
-    name: z.string(),
-    title: z.string(),
-    avatar: z.object({
-      src: z.string(),
-      alt: z.string(),
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      draft: z.boolean(),
+      name: z.string(),
+      title: z.string(),
+      avatar: z.object({
+        src: image(),
+        alt: z.string(),
+      }),
+      publishDate: z.string().transform((str) => new Date(str)),
+      bio: z.string().transform((str) => str.trimStart()),
     }),
-    publishDate: z.string().transform((str) => new Date(str)),
-    bio: z.string().transform((str) => str.trimStart()),
-  }),
 });
 
 // 3. Export a single `collections` object to register your collection(s)

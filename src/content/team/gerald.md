@@ -2,7 +2,7 @@
 draft: false
 name: "Gerald Jackson Jr."
 title: "Yoga Instructor"
-avatar: { src: "/gerald.jpeg", alt: "Gerald Jackson Jr." }
+avatar: { src: "/public/gerald.jpeg", alt: "Gerald Jackson Jr." }
 publishDate: "2022-11-08 15:39"
 bio: "Meet Gerald Jackson Jr., a distinguished Computer Information Systems graduate from Howard University, thriving as our accomplished product design director. His expertise encompasses UX design, fortified by recent qualitative and quantitative research. Gerald is renowned for simplifying SaaS concepts, bridging front-end and back-end solutions, and cultivating strong relationships, boasting a proven track record of crafting user-centric products. \n
 
