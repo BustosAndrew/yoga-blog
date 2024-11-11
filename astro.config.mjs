@@ -17,10 +17,9 @@ export default defineConfig({
         region: "us",
       },
       components: {
+        "all-articles": "storyblok/AllArticles",
+        article: "storyblok/Article",
         page: "storyblok/Page",
-        feature: "storyblok/Feature",
-        grid: "storyblok/Grid",
-        teaser: "storyblok/Teaser",
       },
     }),
     tailwind(),

@@ -1,67 +1,51 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "@layouts/Layout.astro";
+import { useStoryblokApi } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import BlogLayout from "@layouts/BlogLayout.astro";
 import Container from "@components/container.astro";
 
-// Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("sessions");
-  return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
-}
+  const storyblokApi = useStoryblokApi()
+ 
+  const { data } = await storyblokApi.get('cdn/links', {
+    starts_with: 'sessions/',
+    version: 'draft',
+  })
 
-// Get the entry directly from the prop on render
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+  return Object.values(data.links)
+    .filter((link: any) => !link.is_folder)
+    .map((link:any) => {
+      // Remove 'sessions/' prefix for routing
+      const slug = link.slug.replace('sessions/', '')
+      return {
+        params: { 
+          slug: slug || undefined 
+        },
+        props: { 
+          fullSlug: link.slug 
+        }
+      }
+    })
+}
+ 
+const { slug } = Astro.params
+const fullSlug = Astro.props.fullSlug || `sessions/${slug}`
+ 
+const storyblokApi = useStoryblokApi()
+ 
+const { data } = await storyblokApi.get(
+  `cdn/stories/${fullSlug}`,
+  {
+    version: 'draft',
+  }
+)
+ 
+const story = data.story
 ---
 
-<Layout title={entry.data.title}>
+<BlogLayout>
   <Container>
-    <div class="mx-auto max-w-3xl mt-14">
-      <span
-        class="text-yellow-500 uppercase tracking-wider text-sm font-medium">
-        {entry.data.category}
-      </span>
-
-      <h1
-        class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-1 lg:leading-tight">
-        {entry.data.title}
-      </h1>
-      <div class="flex gap-2 mt-3 items-center flex-wrap md:flex-nowrap">
-        <span class="text-slate-400">
-          {entry.data.author}
-        </span>
-        <span class="text-slate-400">•</span>
-        <time
-          class="text-slate-400"
-          datetime={entry.data.publishDate.toISOString()}>
-          {entry.data.publishDate.toDateString()}
-        </time>
-        <span class="text-slate-400 hidden md:block">•</span>
-        <div class="w-full md:w-auto flex flex-wrap gap-3">
-          {
-            entry.data.tags.map((tag) => (
-              <span class="text-sm text-slate-400">#{tag}</span>
-            ))
-          }
-        </div>
-      </div>
-    </div>
-    <div class="mx-auto text-slate-400 prose prose-lg mt-6 max-w-3xl">
-      {
-        entry.data.video.src && (
-          <video
-            class="w-full rounded-md mt-4"
-            controls
-            src={entry.data.video.src}
-            preload="metadata"
-          />
-        )
-      }
-      <Content />
-    </div>
+    <StoryblokComponent blok={story.content} />
     <div class="text-center mt-8">
       <a
         href="/sessions"
@@ -70,4 +54,4 @@ const { Content } = await entry.render();
       >
     </div>
   </Container>
-</Layout>
+</BlogLayout>

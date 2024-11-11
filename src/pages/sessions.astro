@@ -1,21 +1,28 @@
 ---
-import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import { useStoryblokApi } from '@storyblok/astro'
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
 import About from "@components/about.astro";
 import Cta from "@components/cta.astro";
 
-// Filter blog entries with 'draft: false' & date before current date
-const publishedBlogEntries = await getCollection("sessions", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
+const storyblokApi = useStoryblokApi()
+
+// Fetch articles
+const { data } = await storyblokApi.get('cdn/stories', {
+  content_type: 'AllArticles', // Use the content type you've set up in Storyblok
+  sort_by: 'created_at:desc' // Sort articles by creation date
 });
 
-// Sort content entries by publication date
-publishedBlogEntries.sort(function (a, b) {
-  return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
-});
+// Transform Storyblok stories into a more usable format
+const articles = data.stories.map((story) => ({
+  id: story.id,
+  title: story.content.title,
+  description: story.content.description,
+  image: story.content.image,
+  publishedAt: new Date(story.created_at).toLocaleDateString(),
+  slug: story.slug
+}));
 ---
 
 <Layout title="Sessions">
@@ -27,49 +34,28 @@ publishedBlogEntries.sort(function (a, b) {
       </Fragment>
     </Sectionhead>
     <main class="mt-16">
-      <ul class="grid gap-5 max-w-4xl mx-auto">
-        {
-          publishedBlogEntries.map((blogPostEntry, index) => (
-            <li>
-              <a href={`/sessions/${blogPostEntry.slug}`}>
-                <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center hover:bg-stone-500/20 transition p-4 rounded">
-                  <Image
-                    src={blogPostEntry.data.image.src}
-                    alt={blogPostEntry.data.image.alt}
-                    sizes="(max-width: 800px) 100vw, 800px"
-                    width={800}
-                    height={500}
-                    loading={index <= 2 ? "eager" : "lazy"}
-                    decoding={index <= 2 ? "sync" : "async"}
-                    class="w-full rounded-md !shadow-none"
-                  />
-                  <div>
-                    <span class="text-yellow-500 uppercase tracking-wider text-sm font-medium">
-                      {blogPostEntry.data.category}
-                    </span>
-
-                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
-                      {blogPostEntry.data.title}
-                    </h2>
-
-                    <div class="flex gap-2 mt-3">
-                      <span class="text-slate-400">
-                        {blogPostEntry.data.author}
-                      </span>
-                      <span class="text-slate-400">• </span>
-                      <time
-                        class="text-slate-400"
-                        datetime={blogPostEntry.data.publishDate.toISOString()}>
-                        {blogPostEntry.data.publishDate.toDateString()}
-                      </time>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <section class="grid md:grid-cols-3 gap-10">
+        {articles.map((article) => (
+          <div class="group">
+            {article.image && (
+              <img 
+                src={article.image} 
+                alt={article.title} 
+                class="w-full rounded-md mb-4"
+              />
+            )}
+            <h3 class="text-xl font-semibold mb-2">{article.title}</h3>
+            <p class="text-gray-600 mb-4">{article.description}</p>
+            <a 
+              href={`/articles/${article.slug}`} 
+              class="text-blue-500 hover:underline"
+            >
+              Read more
+            </a>
+            <p class="text-sm text-gray-500">Published on {article.publishedAt}</p>
+          </div>
+        ))}
+      </section>
       <About />
       <Cta />
     </main>
