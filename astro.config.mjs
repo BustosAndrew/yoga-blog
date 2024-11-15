@@ -17,7 +17,6 @@ export default defineConfig({
         region: "us",
       },
       components: {
-        "all-articles": "storyblok/AllArticles",
         article: "storyblok/Article",
         page: "storyblok/Page",
       },
