@@ -10,8 +10,9 @@ const storyblokApi = useStoryblokApi()
 
 // Fetch articles
 const { data } = await storyblokApi.get('cdn/stories', {
-  content_type: 'AllArticles', // Use the content type you've set up in Storyblok
-  sort_by: 'created_at:desc' // Sort articles by creation date
+  content_type: 'Article', // Use the content type you've set up in Storyblok
+  sort_by: 'created_at:desc', // Sort articles by creation date
+  version: 'draft' // Only fetch published articles
 });
 
 // Transform Storyblok stories into a more usable format
