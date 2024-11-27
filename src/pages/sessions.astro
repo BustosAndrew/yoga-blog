@@ -5,6 +5,7 @@ import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
 import About from "@components/about.astro";
 import Cta from "@components/cta.astro";
+import { Image } from 'astro:assets';
 
 const storyblokApi = useStoryblokApi()
 
@@ -12,18 +13,36 @@ const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get('cdn/stories', {
   content_type: 'Article', // Use the content type you've set up in Storyblok
   sort_by: 'created_at:desc', // Sort articles by creation date
-  version: 'draft' // Only fetch published articles
+  // version: 'draft' // Only fetch published articles
 });
 
-// Transform Storyblok stories into a more usable format
+const isYouTubeUrl = (url) => {
+  const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+  return url && youtubeRegex.test(url);
+};
+
+const isImageUrl = (url) => {
+  const imageExtensions = /\.(jpg|jpeg|png|gif|webp|svg|avif)$/i;
+  return url && imageExtensions.test(url);
+};
+
+// Transform Storyblok stories with media type checking
 const articles = data.stories.map((story) => ({
   id: story.id,
   title: story.content.title,
-  description: story.content.description,
-  image: story.content.image,
-  publishedAt: new Date(story.created_at).toLocaleDateString(),
-  slug: story.slug
+  mediaType: story.content.media ? 
+    (isImageUrl(story.content.media.filename) ? 'image' : 
+     isYouTubeUrl(story.content.media.filename) ? 'youtube' : 'unknown') : null,
+  media: story.content.media,
+  publishedAt: new Date(story.created_at),
+  slug: story.slug,
+  author: story.content.author,
+  category: story.content.category,
+  thumbnail: story.content.thumbnail,
+  tags: story.content.tags
 }));
+
+// console.log(articles);
 ---
 
 <Layout title="Sessions">
@@ -35,28 +54,46 @@ const articles = data.stories.map((story) => ({
       </Fragment>
     </Sectionhead>
     <main class="mt-16">
-      <section class="grid md:grid-cols-3 gap-10">
-        {articles.map((article) => (
-          <div class="group">
-            {article.image && (
-              <img 
-                src={article.image} 
-                alt={article.title} 
-                class="w-full rounded-md mb-4"
-              />
-            )}
-            <h3 class="text-xl font-semibold mb-2">{article.title}</h3>
-            <p class="text-gray-600 mb-4">{article.description}</p>
-            <a 
-              href={`/articles/${article.slug}`} 
-              class="text-blue-500 hover:underline"
-            >
-              Read more
+      <ul class="grid gap-5 max-w-4xl mx-auto">
+        {articles.map((article, index) => 
+          <li>
+            <a href={`/sessions/${article.slug}`}>
+              <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center hover:bg-stone-500/20 transition p-4 rounded">
+                {article.thumbnail && <Image
+                    src={article.thumbnail.filename}
+                    alt={article.title}
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    width={800}
+                    height={500}
+                    loading={index <= 2 ? "eager" : "lazy"}
+                    decoding={index <= 2 ? "sync" : "async"}
+                    class="w-full rounded-md !shadow-none"
+                  />}
+                  <div>
+                    <span class="text-yellow-500 uppercase tracking-wider text-sm font-medium">
+                      {article.category}
+                    </span>
+                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
+                      {article.title}
+                    </h2>
+
+                    <div class="flex gap-2 mt-3">
+                      <span class="text-slate-400">
+                        {article.author}
+                      </span>
+                      <span class="text-slate-400">• </span>
+                      <time
+                        class="text-slate-400"
+                        datetime={article.publishedAt.toISOString()}>
+                        {article.publishedAt.toDateString()}
+                      </time>
+                    </div>
+                  </div>
+              </div>
             </a>
-            <p class="text-sm text-gray-500">Published on {article.publishedAt}</p>
-          </div>
-        ))}
-      </section>
+          </li>
+        )}
+      </ul>
       <About />
       <Cta />
     </main>

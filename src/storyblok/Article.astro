@@ -1,20 +1,63 @@
 ---
 import { storyblokEditable, renderRichText } from '@storyblok/astro'
- 
-const { blok } = Astro.props
+import { Image } from "astro:assets"
+const { blok, publishedAt } = Astro.props
 const renderedRichText = renderRichText(blok.content)
+// console.log(blok)
 ---
  
 <article {...storyblokEditable(blok)}>
-  <div class="container mx-auto mb-12">
-    <h1 class="text-6xl text-[#50b0ae] font-bold mt-12 mb-4">
-      {blok.title}
-    </h1>
-    <img
-      class="w-full h-[360px] lg:h-[450px] object-cover"
-      alt={blok?.image?.alt}
-      src={`${blok?.image?.filename}/m/1600x0`}
-    />
-    <div class="prose" set:html={renderedRichText} />
-  </div>
+   <div class="mx-auto max-w-3xl mt-14">
+      <span
+        class="text-yellow-500 uppercase tracking-wider text-sm font-medium">
+        {blok.category}
+      </span>
+
+      <h1
+        class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-1 lg:leading-tight">
+        {blok.title}
+      </h1>
+      <div class="flex gap-2 mt-3 items-center flex-wrap md:flex-nowrap">
+        <span class="text-slate-400">
+          {blok.author}
+        </span>
+        <span class="text-slate-400">•</span>
+        <time
+          class="text-slate-400"
+          datetime={publishedAt.toISOString()}>
+          {publishedAt.toDateString()}
+        </time>
+        {
+        blok.tags &&
+        <span class="text-slate-400 hidden md:block">•</span>
+        <div class="w-full md:w-auto flex flex-wrap gap-3">
+          {
+            blok.tags.split(' ').map((tag) => (
+              <span class="text-sm text-slate-400">#{tag}</span>
+            ))
+          }
+        </div>
+        }
+      </div>
+    </div>
+    <div class="mx-auto text-slate-400 mt-6 max-w-3xl flex flex-col gap-10">
+      {
+        blok.media.url && (
+          <iframe class="w-full h-96 rounded-md mt-4" src={blok.media.url} title={blok.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        )
+      }
+      {
+        blok.media.filename && (
+          <Image
+            src={blok.media.filename}
+            alt={blok.title}
+            sizes="(max-width: 800px) 100vw, 800px"
+            width={800}
+            height={500}
+            class="w-full rounded-md !shadow-none"
+          />
+        )
+      }
+      <div class="prose prose-lg text-slate-400" set:html={renderedRichText} />
+    </div>
 </article>

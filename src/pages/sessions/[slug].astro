@@ -9,7 +9,6 @@ export async function getStaticPaths() {
  
   const { data } = await storyblokApi.get('cdn/links', {
     starts_with: 'sessions/',
-    version: 'draft',
   })
 
   return Object.values(data.links)
@@ -35,17 +34,14 @@ const storyblokApi = useStoryblokApi()
  
 const { data } = await storyblokApi.get(
   `cdn/stories/${fullSlug}`,
-  {
-    version: 'draft',
-  }
 )
  
 const story = data.story
 ---
 
-<BlogLayout>
+<BlogLayout title={story.content.title} desc={story.content.content}>
   <Container>
-    <StoryblokComponent blok={story.content} />
+    <StoryblokComponent blok={story.content} publishedAt={new Date(story.created_at)} />
     <div class="text-center mt-8">
       <a
         href="/sessions"

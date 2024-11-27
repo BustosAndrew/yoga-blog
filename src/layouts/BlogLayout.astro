@@ -4,6 +4,19 @@ import Footer from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
 import "../styles/globals.css";
+
+const {title, desc} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const makeTitle = title
+  ? title + " | " + "Yoga Lightwave"
+  : "Astroship - Starter Template for Astro with Tailwind CSS";
+
+const resolvedImageWithDomain = new URL(
+  "/opengraph.jpg",
+  Astro.site
+).toString();
 ---
 
 <html lang='en'>
@@ -11,7 +24,17 @@ import "../styles/globals.css";
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
-    <title>The Storyblok Astro Ultimate Tutorial: Part 2</title>
+    <SEO title={makeTitle} canonical={canonicalURL} description={desc} openGraph={{
+        basic: {
+          url: canonicalURL,
+          type: "website",
+          title: `Yoga Lightwave`,
+          image: resolvedImageWithDomain,
+        },
+        image: {
+          alt: "Yoga Lightwave Homepage Screenshot",
+        },
+      }} />
   </head>
   <body class='mx-auto'>
     <Navbar />
