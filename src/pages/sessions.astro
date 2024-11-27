@@ -16,24 +16,10 @@ const { data } = await storyblokApi.get('cdn/stories', {
   // version: 'draft' // Only fetch published articles
 });
 
-const isYouTubeUrl = (url) => {
-  const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
-  return url && youtubeRegex.test(url);
-};
-
-const isImageUrl = (url) => {
-  const imageExtensions = /\.(jpg|jpeg|png|gif|webp|svg|avif)$/i;
-  return url && imageExtensions.test(url);
-};
-
 // Transform Storyblok stories with media type checking
 const articles = data.stories.map((story) => ({
   id: story.id,
   title: story.content.title,
-  mediaType: story.content.media ? 
-    (isImageUrl(story.content.media.filename) ? 'image' : 
-     isYouTubeUrl(story.content.media.filename) ? 'youtube' : 'unknown') : null,
-  media: story.content.media,
   publishedAt: new Date(story.created_at),
   slug: story.slug,
   author: story.content.author,

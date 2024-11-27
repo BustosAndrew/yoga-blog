@@ -42,14 +42,14 @@ const renderedRichText = renderRichText(blok.content)
     </div>
     <div class="mx-auto text-slate-400 mt-6 max-w-3xl flex flex-col gap-10">
       {
-        blok.media.url && (
+        blok.media?.url && (
           <iframe class="w-full h-96 rounded-md mt-4" src={blok.media.url} title={blok.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         )
       }
       {
-        blok.media.filename && (
+        blok.image?.filename && (
           <Image
-            src={blok.media.filename}
+            src={blok.image.filename}
             alt={blok.title}
             sizes="(max-width: 800px) 100vw, 800px"
             width={800}
