@@ -11,7 +11,7 @@ export async function getStaticPaths() {
     starts_with: 'sessions/',
   })
 
-  return Object.values(data.links)
+  return Object.values(data.links as { [key: string]: any })
     .filter((link: any) => !link.is_folder)
     .map((link:any) => {
       // Remove 'sessions/' prefix for routing
