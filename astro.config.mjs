@@ -5,7 +5,7 @@ import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import basicSsl from "@vitejs/plugin-basic-ssl";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel";
 const env = loadEnv("", process.cwd(), "STORYBLOK");
 
 // https://astro.build/config
