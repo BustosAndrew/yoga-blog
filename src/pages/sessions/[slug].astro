@@ -4,28 +4,28 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import BlogLayout from "@layouts/BlogLayout.astro";
 import Container from "@components/container.astro";
 
-export async function getStaticPaths() {
-  const storyblokApi = useStoryblokApi()
+// export async function getStaticPaths() {
+//   const storyblokApi = useStoryblokApi()
  
-  const { data } = await storyblokApi.get('cdn/links', {
-    starts_with: 'sessions/',
-  })
+//   const { data } = await storyblokApi.get('cdn/links', {
+//     starts_with: 'sessions/',
+//   })
 
-  return Object.values(data.links as { [key: string]: any })
-    .filter((link: any) => !link.is_folder)
-    .map((link:any) => {
-      // Remove 'sessions/' prefix for routing
-      const slug = link.slug.replace('sessions/', '')
-      return {
-        params: { 
-          slug: slug || undefined 
-        },
-        props: { 
-          fullSlug: link.slug 
-        }
-      }
-    })
-}
+//   return Object.values(data.links as { [key: string]: any })
+//     .filter((link: any) => !link.is_folder)
+//     .map((link:any) => {
+//       // Remove 'sessions/' prefix for routing
+//       const slug = link.slug.replace('sessions/', '')
+//       return {
+//         params: { 
+//           slug: slug || undefined 
+//         },
+//         props: { 
+//           fullSlug: link.slug 
+//         }
+//       }
+//     })
+// }
  
 const { slug } = Astro.params
 const fullSlug = Astro.props.fullSlug || `sessions/${slug}`
