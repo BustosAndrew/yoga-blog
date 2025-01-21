@@ -7,22 +7,22 @@ import Container from "@components/container.astro";
 export const prerender = false;
 
 
-export async function getStaticPaths() {
-  const sbApi = useStoryblokApi();
+// export async function getStaticPaths() {
+//   const sbApi = useStoryblokApi();
 
-  const { data } = await sbApi.get("cdn/stories", {
-    content_type: "Article",
-    version: "published",
-  });
+//   const { data } = await sbApi.get("cdn/stories", {
+//     content_type: "Article",
+//     version: "published",
+//   });
 
-  const stories = Object.values(data.stories);
+//   const stories = Object.values(data.stories);
 
-  return stories.map((story: any) => {
-    return {
-      params: { slug: story.slug },
-    };
-  });
-}
+//   return stories.map((story: any) => {
+//     return {
+//       params: { slug: story.slug },
+//     };
+//   });
+// }
  
 const { slug } = Astro.params 
 const storyblokApi = useStoryblokApi()

@@ -35,6 +35,6 @@ export default defineConfig({
       https: true,
     },
   },
-
+  output: "server",
   adapter: vercel(),
 });
