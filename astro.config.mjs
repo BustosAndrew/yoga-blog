@@ -5,11 +5,13 @@ import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import basicSsl from "@vitejs/plugin-basic-ssl";
+import vercel from "@astrojs/vercel/serverless";
 const env = loadEnv("", process.cwd(), "STORYBLOK");
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://yogalightwave.com/",
+
   integrations: [
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,
@@ -25,11 +27,14 @@ export default defineConfig({
     mdx(),
     sitemap(),
   ],
+
   vite: {
     plugins: [basicSsl()],
     server: {
       https: true,
     },
   },
+
   output: "server",
+  adapter: vercel(),
 });
