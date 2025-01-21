@@ -7,12 +7,14 @@ import About from "@components/about.astro";
 import Cta from "@components/cta.astro";
 import { Image } from 'astro:assets';
 
+export const prerender = false;
+
+
 const storyblokApi = useStoryblokApi()
 
 // Fetch articles
-const { data } = await storyblokApi.get('cdn/stories', {
+const { data } = await storyblokApi.get('cdn/stories/', {
   content_type: 'Article', // Use the content type you've set up in Storyblok
-  sort_by: 'created_at:desc', // Sort articles by creation date
   version: 'published' // Only fetch published articles
 });
 
