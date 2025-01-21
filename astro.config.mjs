@@ -22,6 +22,7 @@ export default defineConfig({
         article: "storyblok/Article",
         page: "storyblok/Page",
       },
+      livePreview: true,
     }),
     tailwind(),
     mdx(),
